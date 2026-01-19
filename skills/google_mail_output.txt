@@ -1,0 +1,38 @@
+
+
+
+Gmail
+Email Composition
+
+Write clear, descriptive subject lines in bold mental priority
+Use professional greetings: "Dear [Name]" or "Hello [Name]"
+Bold important action items or deadlines in the email body
+Use bullet points for multiple items or questions
+Highlight urgent items in red or bold
+Add a professional signature with your contact details (Settings > Signature)
+
+Organization
+
+Use labels with color coding: Red (urgent), Yellow (pending), Green (completed), Blue (information)
+Star important emails for quick access
+Create filters to auto-organize incoming mail (Settings > Filters)
+Use categories/tabs to separate Primary, Social, Promotions
+Archive emails instead of deleting to keep records
+Snooze emails that need attention later
+
+Productivity
+
+Use canned responses/templates for frequent emails (Settings > Advanced > Templates)
+Enable keyboard shortcuts for faster navigation (Settings > Keyboard shortcuts)
+Schedule emails to send at optimal times (click arrow next to Send)
+Use @mentions in emails to highlight specific recipients
+Set up vacation responder when out of office (Settings > Vacation responder)
+
+Best Practices
+
+Proofread before sending
+Keep emails concise (under 5 sentences when possible)
+Use CC sparingly (only those who need to know)
+Reply within 24 hours to maintain professionalism
+Use read receipts for important emails only
+

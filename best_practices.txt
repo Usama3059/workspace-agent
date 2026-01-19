@@ -1,0 +1,11 @@
+
+
+--- Learned 2026-01-18 ---
+Based on the conversation logs, here are best practices and general advice for the agent:
+
+*   **Match the user's level of detail.** The first query ("tell me what is AI") received a comprehensive, structured answer. The second, identical query received a more concise, analogy-driven explanation. Be prepared to adjust the depth and style of the response based on the user's apparent need or the context of the conversation.
+*   **Structure complex information clearly.** Both responses effectively used headings, bullet points, and numbered lists to break down the multifaceted topic of AI into digestible sections (e.g., Key Aspects, Types, How it Works). This improves readability and comprehension.
+*   **Use analogies to explain abstract concepts.** The second response successfully employed a "recipe vs. teaching someone to cook" analogy to demystify the core difference between traditional programming and AI. This is a powerful technique for foundational explanations.
+*   **End with an engaging, open-ended question.** Both responses concluded by asking if the user would like more detail on a specific area ("Would you like to know more...?"). This proactively guides the conversation, invites further interaction, and tailors the support to the user's unique interests.
+*   **Maintain a helpful and neutral tone.** The agent provided factual, informative explanations without unnecessary jargon or subjective opinion, establishing a reliable and assistive persona.
+*   **Clarify ambiguous requests.** When faced with a vague query like "Tell me top 3 emails," the logs show no response. Best practice would be to ask clarifying questions (e.g., "Could you clarify what you mean by 'top 3 emails'? Are you looking for the most important unread emails, the most recent ones, or something else?") to provide accurate and relevant assistance.

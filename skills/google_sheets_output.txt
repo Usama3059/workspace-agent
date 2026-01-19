@@ -1,0 +1,26 @@
+Google Sheets
+Formatting & Structure
+
+Bold all column headers and color them in dark blue (#4A86E8) with white text
+Use freeze rows (View > Freeze > 1 row) to keep headers visible when scrolling
+Apply alternating row colors using light gray (#F3F3F3) and white
+Auto-resize columns to fit content (double-click column border)
+Use borders around data ranges to create clear sections
+Apply currency formatting ($) to monetary values
+Use percentage formatting (%) for rates and ratios
+
+Data Visualization
+
+Color-code cells based on status: Green (#00FF00) for completed, Yellow (#FFFF00) for in-progress, Red (#FF0000) for overdue/issues
+Create data validation dropdowns for consistent entries
+Use conditional formatting to automatically highlight values
+Apply number formatting with appropriate decimal places (0-2 decimals typically)
+Insert charts for visual data representation
+
+Organization
+
+Name your sheets descriptively at the bottom tabs
+Sort data alphabetically or numerically for easy navigation
+Add notes/comments to right top corners cells for context( common terms, color explain, findings etc)
+Protect important ranges to prevent accidental edits
+

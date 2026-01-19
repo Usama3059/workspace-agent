@@ -1,0 +1,173 @@
+# Google Docs API Index Error - Troubleshooting Guide
+
+## The Error
+
+```
+langchain_core.tools.base.ToolException: Error calling tool 'modify_doc_text':
+API error in modify_doc_text: <HttpError 400 when requesting
+https://docs.googleapis.com/v1/documents/1RpXRKTqVtsAUgFF77C5j_-6_kHmqODjqJsNeKVIitqs:batchUpdate?alt=json
+returned "Invalid requests[0].insertText: Index 166 must be less than the end index
+of the referenced segment, 166.">
+```
+
+## Root Cause
+
+The Google Docs API has a strict rule about insertion indices:
+
+- **Document length**: 166 characters (indices 0-165)
+- **Agent tried to insert at**: Index 166
+- **Problem**: Index 166 is OUT OF BOUNDS (it's the length, not a valid position)
+
+### Why This Happens
+
+When you want to append text to the end of a document:
+
+- ❌ **WRONG**: Use `start_index = document_length` (166)
+- ✅ **CORRECT**: Use `start_index = document_length - 1` (165) or insert at the beginning
+
+The Google Docs API requires: **`start_index < total_length`**
+
+## The Fix Applied
+
+I've updated the agent instructions to include critical Google Docs API rules:
+
+```python
+**Google Docs API Rules (CRITICAL):**
+- ALWAYS call `inspect_doc_structure` BEFORE modifying any document to get the current document length
+- When inserting text, use `start_index: 1` (right after the document title) instead of appending at the end
+- NEVER use an index equal to or greater than the document's total length
+- The `total_length` from `inspect_doc_structure` is the MAXIMUM index - you must use a value LESS than this
+```
+
+## How It Works Now
+
+### Before (Causing Errors)
+
+```python
+# Agent tries to append at the end
+modify_doc_text(
+    document_id="...",
+    start_index=166,  # ❌ ERROR! Document length is 166
+    text="New content"
+)
+```
+
+### After (Fixed)
+
+```python
+# Step 1: Agent inspects document first
+result = inspect_doc_structure(document_id="...")
+# Returns: {"total_length": 166, ...}
+
+# Step 2: Agent inserts at beginning (safer)
+modify_doc_text(
+    document_id="...",
+    start_index=1,  # ✅ SAFE! Inserts after title
+    text="New content\n\n"
+)
+```
+
+## Why Insert at Index 1?
+
+Google Docs structure:
+
+```
+Index 0: Document start
+Index 1: After title (BEST PLACE TO INSERT)
+Index 2-165: Document content
+Index 166: OUT OF BOUNDS (document length)
+```
+
+Inserting at index 1 (right after the title) is safer because:
+
+1. ✅ Always valid (even in empty documents)
+2. ✅ Preserves document title
+3. ✅ New content appears at the top (most visible)
+4. ✅ No risk of index out of bounds errors
+
+## Alternative Solutions
+
+If you need to append at the end:
+
+### Option A: Use `total_length - 1`
+
+```python
+# Get document length first
+structure = inspect_doc_structure(document_id)
+safe_index = structure["total_length"] - 1
+
+# Insert at the last valid position
+modify_doc_text(
+    document_id=document_id,
+    start_index=safe_index,
+    text="Appended content"
+)
+```
+
+### Option B: Use `create_table_with_data` (Recommended for structured content)
+
+```python
+# This tool handles indexing automatically
+create_table_with_data(
+    document_id=document_id,
+    table_data=[["Header"], ["Data"]],
+    index=structure["total_length"]  # This tool accepts total_length
+)
+```
+
+## Testing the Fix
+
+Run your agent again with the same request. The agent will now:
+
+1. ✅ Call `inspect_doc_structure` first
+2. ✅ Get the safe insertion index
+3. ✅ Insert at index 1 (after title)
+4. ✅ Avoid the index error
+
+## Common Scenarios
+
+### Scenario 1: Empty Document
+
+- Total length: 1 (just the title)
+- Safe index: 1 (insert after title)
+
+### Scenario 2: Document with Content
+
+- Total length: 500
+- Safe index: 1 (insert at top) or 499 (append at end)
+
+### Scenario 3: Very Long Document
+
+- Total length: 10000
+- Safe index: 1 (recommended) or 9999 (if appending)
+
+## Prevention Checklist
+
+Before modifying any Google Doc, the agent should:
+
+- [ ] Call `inspect_doc_structure` to get document info
+- [ ] Check the `total_length` value
+- [ ] Use `start_index = 1` for inserting at the top
+- [ ] OR use `start_index = total_length - 1` for appending
+- [ ] NEVER use `start_index >= total_length`
+
+## Related MCP Tools
+
+The Google Workspace MCP server provides these document tools:
+
+1. **`inspect_doc_structure`** - Get document length and structure (ALWAYS USE FIRST)
+2. **`modify_doc_text`** - Insert/modify text (requires valid index)
+3. **`create_table_with_data`** - Create tables (handles indexing automatically)
+4. **`get_doc_content`** - Read document content
+
+## Summary
+
+**The Problem**: Agent tried to insert at index 166 in a document with length 166 (out of bounds)
+
+**The Solution**:
+
+1. Added instructions to call `inspect_doc_structure` first
+2. Changed strategy to insert at index 1 (after title) instead of appending
+3. Added validation rules to prevent index errors
+
+**Result**: Agent will now safely insert content without index errors! 🎉

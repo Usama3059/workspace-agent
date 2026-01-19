@@ -1,0 +1,34 @@
+Google Slides
+Design & Layout
+
+Use consistent font families throughout (max 2 fonts: one for headers, one for body)
+Apply company/brand colors consistently across all slides
+Bold slide titles and make them size 32-40pt
+Keep body text at 18-24pt for readability
+Use dark text on light backgrounds or white text on dark backgrounds for contrast
+Apply a professional theme (Slide > Change theme)
+
+Visual Hierarchy
+
+Place key information in the top-left (where eyes naturally start)
+Use color-coded sections: Blue for information, Green for success/positives, Red for warnings/negatives, Yellow for highlights
+Add icons or images to break up text-heavy slides
+Use bulleted lists with 5-7 words per bullet maximum
+Highlight important numbers in bold and larger font size
+
+Content Structure
+
+Limit text to 6 lines per slide (fewer is better)
+Use one main idea per slide
+Add slide numbers for navigation (Insert > Slide numbers)
+Create a table of contents slide for longer presentations
+Use transition effects sparingly (Slide > Transition > choose subtle effects)
+Add speaker notes for your talking points (View > Show speaker notes)
+
+Professional Touches
+
+Align all elements properly (Arrange > Align)
+Maintain consistent spacing between elements
+Use master slides for consistent formatting (Slide > Edit theme)
+Add your logo on every slide (typically top-right corner)
+

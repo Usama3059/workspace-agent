@@ -1,0 +1,7 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "workspace_agent": "./main.py:workspace_agent"
+  },
+  "env": ".env"
+}

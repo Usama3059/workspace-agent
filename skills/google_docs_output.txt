@@ -1,0 +1,60 @@
+
+Google Docs
+Formatting & Structure
+
+Use Heading 1 for main titles (formatted in bold, 20pt, dark blue #1155CC)
+Use Heading 2 for subsections (formatted in bold, 16pt, dark gray #666666)
+Use Heading 3 for minor sections (formatted in bold, 14pt, black)
+Keep body text at 11-12pt in a readable font (Arial, Calibri, or Times New Roman)
+Apply 1.15 or 1.5 line spacing for readability
+Use justified or left alignment for professional documents
+
+Visual Organization
+
+Bold key terms and important information
+Use italics for emphasis or quotes
+Underline sparingly (only for critical items)
+Highlight text in yellow for items needing review or attention
+Add page numbers (Insert > Page numbers)
+Create a table of contents for long documents (Insert > Table of contents)
+
+Content Enhancement
+
+Use bullet points for lists and action items
+Insert tables for structured data (Insert > Table) with blue headers
+Add hyperlinks to relevant resources (make them blue and underlined)
+Include images with captions for visual explanation
+Use page breaks to separate major sections (Insert > Break > Page break)
+
+Collaboration
+
+Use comments for feedback without altering text (Insert > Comment)
+Enable suggesting mode when editing others' work (top-right editing mode)
+@mention collaborators in comments to notify them
+Use version history to track changes (File > Version history)
+Set sharing permissions appropriately (Share button > set access levels)
+
+Professional Polish
+
+Check spelling and grammar before finalizing (Tools > Spelling and grammar)
+Use margins of 1 inch on all sides
+Add headers and footers with document title/date (Insert > Headers & footers)
+Apply styles consistently throughout the document
+Name your document descriptively before sharing
+Export as PDF for final distribution (File > Download > PDF)
+
+
+General Cross-Platform Guidelines
+If you have these tools/features, follow these practices:
+
+Use consistent branding (colors, fonts, logos) across all documents
+Enable auto-save to prevent data loss
+Share with appropriate permissions: View, Comment, or Edit
+Use descriptive file names: "2025-Q1-Sales-Report" not "Report1"
+Organize files in folders by project, date, or category
+Back up important documents regularly
+Use offline mode when needed (if available)
+Enable two-factor authentication for security
+Review sharing settings before sending sensitive information
+
+If any tool doesn't have a mentioned feature, simply skip that instruction.Claude is AI and can make mistakes. Please double-check responses.
