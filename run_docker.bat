@@ -4,9 +4,9 @@ REM Workspace Agent - Docker Run Script
 REM ========================================
 
 echo.
-echo ╔═══════════════════════════════════════════════════════════════╗
-echo ║         🐳 WORKSPACE AI AGENT - DOCKER SCRIPT 🐳             ║
-echo ╚═══════════════════════════════════════════════════════════════╝
+echo =================================================================
+echo          WORKSPACE AI AGENT - DOCKER SCRIPT
+echo =================================================================
 echo.
 
 REM ----------------------------
@@ -15,23 +15,23 @@ REM ----------------------------
 echo [1/4] Checking Docker installation...
 docker --version >nul 2>&1
 if %errorlevel% neq 0 (
-    echo ❌ Docker is not installed or not in PATH
+    echo [ERROR] Docker is not installed or not in PATH
     echo Please install Docker Desktop from https://www.docker.com/products/docker-desktop
     pause
     exit /b 1
 )
-echo ✅ Docker is installed
+echo [SUCCESS] Docker is installed
 echo.
 
 echo Checking if Docker daemon is running...
 docker ps >nul 2>&1
 if %errorlevel% neq 0 (
-    echo ❌ Docker daemon is not running
+    echo [ERROR] Docker daemon is not running
     echo Please start Docker Desktop and try again
     pause
     exit /b 1
 )
-echo ✅ Docker daemon is running
+echo [SUCCESS] Docker daemon is running
 echo.
 
 REM ----------------------------
@@ -45,17 +45,17 @@ REM ----------------------------
 REM Build Docker image
 REM ----------------------------
 echo [2/4] Building Docker image...
-echo 📦 Building image: %IMAGE_NAME%
+echo Building image: %IMAGE_NAME%
 echo This may take several minutes on first run...
 echo.
 
 docker build -t %IMAGE_NAME% .
 if %errorlevel% neq 0 (
-    echo ❌ Failed to build Docker image
+    echo [ERROR] Failed to build Docker image
     pause
     exit /b 1
 )
-echo ✅ Docker image built successfully
+echo [SUCCESS] Docker image built successfully
 echo.
 
 REM ----------------------------
@@ -64,34 +64,34 @@ REM ----------------------------
 echo [3/4] Cleaning up existing containers and ports...
 docker ps -a | findstr %CONTAINER_NAME% >nul 2>&1
 if %errorlevel% equ 0 (
-    echo 🧹 Stopping existing container...
+    echo Stopping existing container...
     docker stop %CONTAINER_NAME% >nul 2>&1
-    echo 🗑️  Removing existing container...
+    echo Removing existing container...
     docker rm %CONTAINER_NAME% >nul 2>&1
 )
 
 REM Force clean ports 8501 and 8080 if still occupied
 for /f "tokens=5" %%a in ('netstat -aon ^| findstr /c:":8501" ^| findstr /i "LISTENING"') do (
-    echo 🗡️ Killing process on port 8501...
+    echo Killing process on port 8501...
     taskkill /F /PID %%a >nul 2>&1
 )
 for /f "tokens=5" %%a in ('netstat -aon ^| findstr /c:":8080" ^| findstr /i "LISTENING"') do (
-    echo 🗡️ Killing process on port 8080...
+    echo Killing process on port 8080...
     taskkill /F /PID %%a >nul 2>&1
 )
-echo ✅ Cleanup complete
+echo [SUCCESS] Cleanup complete
 echo.
 
 REM ----------------------------
 REM Run Docker container
 REM ----------------------------
 echo [4/4] Starting Docker container in detached mode...
-echo 🚀 Running container: %CONTAINER_NAME%
+echo Running container: %CONTAINER_NAME%
 echo.
 
 REM Check if .env file exists
 if exist ".env" (
-    echo 📄 Loading environment variables from .env file...
+    echo Loading environment variables from .env file...
     docker run -d ^
         --name %CONTAINER_NAME% ^
         -p %PORT%:8501 ^
@@ -99,7 +99,7 @@ if exist ".env" (
         --env-file .env ^
         %IMAGE_NAME%
 ) else (
-    echo ⚠️  No .env file found. Running without environment variables...
+    echo [WARNING] No .env file found. Running without environment variables...
     docker run -d ^
         --name %CONTAINER_NAME% ^
         -p %PORT%:8501 ^
@@ -108,7 +108,7 @@ if exist ".env" (
 )
 
 if %errorlevel% neq 0 (
-    echo ❌ Failed to start Docker container
+    echo [ERROR] Failed to start Docker container
     pause
     exit /b 1
 )
@@ -117,21 +117,21 @@ REM ----------------------------
 REM Start both interfaces
 REM ----------------------------
 echo.
-echo 🎯 Starting both interfaces...
+echo Starting both interfaces...
 echo.
 
 REM Start Streamlit in background
-echo 🌐 Opening Streamlit UI in browser...
+echo Opening Streamlit UI in browser...
 timeout /t 3 >nul
 start http://localhost:%PORT%
 
 REM Launch Terminal UI inside container
 echo.
-echo 💻 Launching Terminal UI (main.py) inside container...
-echo ╔═══════════════════════════════════════════════════════════════╗
-echo ║                   TERMINAL INTERFACE ACTIVE                   ║
-echo ║         (Type 'exit' to return to host machine)               ║
-echo ╚═══════════════════════════════════════════════════════════════╝
+echo Launching Terminal UI (main.py) inside container...
+echo =================================================================
+echo                    TERMINAL INTERFACE ACTIVE
+echo          (Type 'exit' to return to host machine)
+echo =================================================================
 echo.
 docker exec -it %CONTAINER_NAME% python main.py
 

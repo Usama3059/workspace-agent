@@ -1,109 +1,173 @@
-# Workspace AI Agent: The Autonomous Assistant That Gets Things Done
+# Workspace AI Agent
 
-## 🚀 What if your AI assistant could actually DO things for you?
+An action-oriented AI assistant that routes between a general chat mode and a tool-enabled agent mode for real work. Built on LangGraph and LangChain with Google Workspace integration via an MCP (Model Context Protocol) server.
 
-Most AI chatbots just... talk. They answer questions, write emails, brainstorm ideas. That's helpful, but it's only half the battle.
-I wanted more. So I built it.
-Introducing **Workspace AI Agent**—an intelligent assistant that doesn't just tell you what to do, it **does it for you**.
+The goal of this project is simple: move from "AI that talks" to "AI that executes" across your workspace and local environment.
 
-### Here's what makes it different:
+## How this helps
 
-✅ **It takes action** → Creates Google Docs, schedules Calendar meetings, searches Gmail, builds Slides presentations, manages Tasks, organizes Drive files, updates Sheets—all from a simple conversation  
-✅ **100+ tools at its fingertips** → From Google Workspace to local computer control (file management, system commands, data processing)  
-✅ **It controls your computer** → Rename 500 files? Run data transformation scripts? It handles terminal commands seamlessly  
-✅ **It remembers** → Learns your preferences and builds a personalized memory of how you work  
-✅ **It's adaptive** → Routes simple questions to a fast assistant, complex tasks to a powerful agent with full tool access  
-✅ **It automates workflows** → Set daily routines like "summarize unread emails at 9 AM" and let it run in the background  
-✅ **It learns from mistakes** → Saves solutions to past errors, continuously improving its execution
+- Reduce manual busywork by letting the agent execute multi-step tasks.
+- Keep context and preferences in memory so you do not repeat yourself.
+- Combine multiple LLM providers under one interface, choosing the right model for the task.
+- Automate recurring routines (summaries, housekeeping, scheduled tasks).
 
-### The Vision:
+## Key features
 
-Fully autonomous Agent capabilities (like Claude Code etc), but for your entire workspace.
-Imagine an AI that:
+- Action routing: decides between safe "assistant" responses and tool-enabled "agent" execution.
+- Google Workspace automation via MCP tools (Gmail, Drive, Calendar, Docs, Slides, Sheets).
+- Local system tooling through a terminal tool (file ops, scripts, data transforms).
+- Multi-provider LLM support (OpenAI, Anthropic, Google Gemini, DeepSeek).
+- Memory and conversation history persistence.
+- Routine scheduling and reusable workflows.
+- Extensible architecture built on LangGraph and LangChain.
 
-- Orchestrates complex multi-step workflows across apps
-- Proactively manages your productivity stack
-- Executes sophisticated automation without you writing code
+## Tools and integrations (what you can actually do)
 
-_Coming soon: Asana, Jira, and deeper workspace automation._
+The agent exposes a growing tool belt through MCP and local system tools. Examples below are representative of the current capabilities and intended use cases.
 
-### Why does this matter?
+### Google Workspace tools (via MCP)
 
-We're entering an era where AI doesn't just advise—it executes.
+These let the agent read and create Workspace content, manage documents, and coordinate schedules:
 
-- "Find client emails from last month, create a summary doc, add action items to Tasks" → **Done in 60 seconds.**
-- "Schedule a team sync, send invites, create a meeting agenda" → **Handled automatically.**
-- "Analyze my Drive, organize by project, create a status report in Slides" → **Complete.**
-- "Scan CSVs, merge data, generate a formatted Sheet with charts" → **Executed instantly.**
+- Gmail: search threads, read metadata, summarize emails, and organize findings.
+- Google Drive: list files/folders, organize files, and retrieve document context.
+- Google Calendar: create and manage events, check availability, and schedule meetings.
+- Google Docs: create docs, add structured content (notes, agendas, summaries), and update existing files.
+- Google Sheets: create sheets, write structured data, and generate reports from CSVs.
+- Google Slides: create presentations, insert structured content, and build decks from outlines.
 
-This isn't science fiction. It's what I've been building—and it works.
+### Local system tools
 
-### What's next?
+Use these for on-device work that supports workspace tasks:
 
-Expanding to cover the full productivity stack—Google Workspace, project management (Asana, Jira), local environments, and beyond.
-The goal? An AI agent that operates across your digital workspace like a seasoned executive assistant—but faster, smarter, and tireless.
+- File operations: rename, move, organize, and inspect local files.
+- Data processing: run scripts to transform CSVs/JSON and prepare reports.
+- Command execution: run terminal commands for automation or analysis.
 
-Are you ready for assistants that take real action across 100+ tools?
-Because that future is already here. 🚀
+### AI model providers
 
----
+Switch providers based on cost/performance or task complexity:
 
-## Prerequisites
+- OpenAI (general reasoning plus tool orchestration)
+- Anthropic (long-form reasoning and planning)
+- Google Gemini (strong general reasoning)
+- DeepSeek (fast cost-efficient reasoning)
 
-- **Python**: Version 3.11 or higher is required.
-- **uv**: An extremely fast Python package installer and resolver.
+## Common use cases
 
-## Setup Guide
+- "Summarize unread emails and draft a status update doc."
+- "Organize Drive by project and generate a slide deck summary."
+- "Schedule a team sync next week and create the agenda."
+- "Merge multiple CSVs and output a formatted sheet with charts."
+- "Scan a folder, clean filenames, and produce a report."
 
-### 1. Install `uv`
+## Project layout (high level)
 
-If you haven't installed `uv` yet, you can obtain it via pip (or check [astral.sh/uv](https://astral.sh/uv) for other installation methods):
+- `main.py`: primary CLI/terminal agent entry point.
+- `app.py`: Streamlit UI scaffold (currently commented out).
+- `routines.py` / `routines.json`: routine definitions and runner.
+- `conversations/`: stored chat logs.
+- `memory.txt`: lightweight long-term memory for user preferences.
+- `.env.example`: environment variable template.
+- `Dockerfile` / `run_docker.*`: Docker build and run helpers.
+
+## Requirements
+
+- Python 3.11+ (3.11 is tested in the Docker image).
+- `uv` (fast Python package manager).
+- Access to at least one supported LLM provider.
+- A local clone of the Google Workspace MCP server.
+
+## Quick start (local)
+
+### 1) Install `uv`
 
 ```bash
 pip install uv
 ```
 
-### 2. Initialize Environment
-
-Sync the project dependencies to create a locked virtual environment:
+### 2) Install dependencies
 
 ```bash
 uv sync
 ```
 
-### 3. Activate Virtual Environment
+### 3) Configure environment
 
-You need to activate the virtual environment to work within it:
+Copy the template and fill in credentials:
 
-- **Windows**:
+- Windows:
   ```powershell
-  .venv\Scripts\activate
+  copy .env.example .env
   ```
-- **macOS/Linux**:
+- macOS/Linux:
   ```bash
-  source .venv/bin/activate
+  cp .env.example .env
   ```
 
-### 4. Configuration
+Minimum required values:
 
-Create your local environment configuration file:
+- `OPENAI_API_KEY` (or another provider API key below)
+- `USER_GOOGLE_EMAIL`
+- `GOOGLE_OAUTH_CLIENT_ID`
+- `GOOGLE_OAUTH_CLIENT_SECRET`
 
-1.  Copy the example template:
-    - **Windows**: `copy .env.example .env`
-    - **macOS/Linux**: `cp .env.example .env`
+Optional provider keys:
 
-2.  Open `.env` in your text editor and fill in the following credentials:
-    - `OPENAI_API_KEY`: For OpenAI models.
-    - `DEEPSEEK_API_KEY`: For DeepSeek models (optional/if used).
-    - `GOOGLE_API_KEY`: For Google Gemini models.
-    - `ANTHROPIC_API_KEY`: For Anthropic Claude models.
-    - `GOOGLE_OAUTH_CLIENT_ID` & `SECRET`: For Google Workspace integration.
-    - `USER_GOOGLE_EMAIL`: The email address for the Workspace agent to act as.
+- `ANTHROPIC_API_KEY`
+- `GOOGLE_API_KEY` or `GEMINI_API_KEY`
+- `DEEPSEEK_API_KEY`
 
-### 5. Running the Agent
+### 4) Point to the MCP server
 
-Start the main agent process:
+This project expects a local clone of the Google Workspace MCP server. Update the path in `main.py` to where you cloned it:
+
+```python
+MCP_SERVER_PATH = Path(r"C:\path\to\google_workspace_mcp")
+```
+
+### 5) Run the agent
 
 ```bash
 uv run main.py
 ```
+
+## Run with Docker
+
+Use the provided script (Windows):
+
+```powershell
+.\run_docker.bat
+```
+
+Or build and run manually:
+
+```bash
+docker build -t workspace-agent .
+docker run -it --rm --env-file .env -p 8501:8501 -p 8080:8080 workspace-agent
+```
+
+Notes:
+
+- The Docker image clones the MCP server automatically into `/app/mcp-server`.
+- The container runs Streamlit by default (see `Dockerfile`). If you want the CLI agent inside the container, run `python main.py` in a shell after the container starts.
+
+## Usage tips
+
+- Start with small requests and confirm authentication when prompted.
+- The agent will return an authorization URL when Google auth is required. Complete the browser flow, then rerun the same command.
+- If a provider key is missing, switch to another provider or add the key in `.env`.
+
+## Troubleshooting
+
+- Missing API key errors: check `.env` and reload your shell.
+- Google auth errors: ensure `GOOGLE_OAUTH_CLIENT_ID` and `GOOGLE_OAUTH_CLIENT_SECRET` are correct and that OAuth consent is configured.
+- MCP server errors: confirm the MCP server path in `main.py` and that its dependencies are installed.
+
+## Roadmap (high level)
+
+- Broader workspace integrations (project management tools).
+- More robust UI for managing routines and memory.
+- Improved safety guardrails and policy enforcement.
+
+---

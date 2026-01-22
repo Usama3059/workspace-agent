@@ -217,9 +217,14 @@ diag_auth.py
 GOOGLE_APPLICATION_CREDENTIALS.json
 conversations
 new.py
-app.py
+# app.py
 src
 utils.py
 .env
 .env.example
 verify_routines.py
+run_app.bat
+# run_docker.bat
+Dockerfile
+
+
