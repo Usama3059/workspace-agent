@@ -4,8 +4,9 @@ An action-oriented AI assistant that routes between a general chat mode and a to
 
 The goal of this project is simple: move from "AI that talks" to "AI that executes" across your workspace and local environment.
 
-![Terminal UI](assets/1768756461225.jpg)
 ![Terminal UI](assets/1768756462030.jpg)
+![Terminal UI](assets/1768756461225.jpg)
+
 
 Screenshots of the terminal UI. Streamlit UI is still in progress.
 
