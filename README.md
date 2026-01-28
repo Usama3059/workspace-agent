@@ -4,6 +4,11 @@ An action-oriented AI assistant that routes between a general chat mode and a to
 
 The goal of this project is simple: move from "AI that talks" to "AI that executes" across your workspace and local environment.
 
+![Terminal UI](assets/1768756461225.jpg)
+![Terminal UI](assets/1768756462030.jpg)
+
+Screenshots of the terminal UI. Streamlit UI is still in progress.
+
 ## How this helps
 
 - Reduce manual busywork by letting the agent execute multi-step tasks.
@@ -16,6 +21,7 @@ The goal of this project is simple: move from "AI that talks" to "AI that execut
 - Action routing: decides between safe "assistant" responses and tool-enabled "agent" execution.
 - Google Workspace automation via MCP tools (Gmail, Drive, Calendar, Docs, Slides, Sheets).
 - Local system tooling through a terminal tool (file ops, scripts, data transforms).
+- Local workspace search via `/search` with BM25 and embedding retrieval.
 - Multi-provider LLM support (OpenAI, Anthropic, Google Gemini, DeepSeek).
 - Memory and conversation history persistence.
 - Routine scheduling and reusable workflows.
@@ -52,6 +58,7 @@ Switch providers based on cost/performance or task complexity:
 - Anthropic (long-form reasoning and planning)
 - Google Gemini (strong general reasoning)
 - DeepSeek (fast cost-efficient reasoning)
+- Qwen3-4B Distilled (local single-file model, currently testing/WIP)
 
 ## Common use cases
 
@@ -65,11 +72,13 @@ Switch providers based on cost/performance or task complexity:
 
 - `main.py`: primary CLI/terminal agent entry point.
 - `app.py`: Streamlit UI scaffold (currently commented out).
-- `routines.py` / `routines.json`: routine definitions and runner.
+- `routines.py` / `artifacts/routines.json`: routine definitions and runner.
 - `conversations/`: stored chat logs.
-- `memory.txt`: lightweight long-term memory for user preferences.
+- `artifacts/memory.txt`: lightweight long-term memory for user preferences.
+- `artifacts/error_history.txt`: past error solutions.
+- `artifacts/best_practices.txt`: learned best practices.
 - `.env.example`: environment variable template.
-- `Dockerfile` / `run_docker.*`: Docker build and run helpers.
+- `setup/`: setup scripts and Docker assets.
 
 ## Requirements
 
@@ -132,18 +141,28 @@ MCP_SERVER_PATH = Path(r"C:\path\to\google_workspace_mcp")
 uv run main.py
 ```
 
+## Setup (WIP)
+
+Local model setup and related scripts are evolving. The goal is to support fully local, single-file model runs without external services. Expect changes to file locations and startup commands while this is being stabilized.
+
+Local workspace search is being expanded. The `/search` command supports BM25 and embedding retrieval to find content across the local workspace, and indexing behavior may change as this matures.
+
+## Qwen3-4B Distilled (WIP)
+
+Support for Qwen3-4B Distilled is in progress and currently under test. The model is intended to run fully locally from a single file, with no external network calls.
+
 ## Run with Docker
 
 Use the provided script (Windows):
 
 ```powershell
-.\run_docker.bat
+.\setup\run_docker.bat
 ```
 
 Or build and run manually:
 
 ```bash
-docker build -t workspace-agent .
+docker build -t workspace-agent -f setup/Dockerfile .
 docker run -it --rm --env-file .env -p 8501:8501 -p 8080:8080 workspace-agent
 ```
 
@@ -169,5 +188,16 @@ Notes:
 - Broader workspace integrations (project management tools).
 - More robust UI for managing routines and memory.
 - Improved safety guardrails and policy enforcement.
+
+## Privacy
+
+- By default, the agent stores local conversation logs and memory files under `conversations/` and `artifacts/`.
+- Local model testing is intended to keep inference fully on-device when enabled.
+- Review and clear local files if you handle sensitive data.
+
+## Links
+
+- LinkedIn profile: https://www.linkedin.com/in/uaz-3059
+- LinkedIn post: https://www.linkedin.com/posts/uaz-3059_ai-automation-productivity-ugcPost-7418702316628979712-oALo
 
 ---

@@ -225,6 +225,12 @@ utils.py
 verify_routines.py
 run_app.bat
 # run_docker.bat
+file_search_ignore.json
+file_search_idex.json
+file_search_state.json
+rag
+search_sources
+app
 Dockerfile
 
 

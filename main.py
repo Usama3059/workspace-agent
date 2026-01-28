@@ -47,7 +47,7 @@ load_dotenv()
 
 MCP_SERVER_PATH = Path(r"C:\WeCrunch\experiments\ease_workspace\google_workspace_mcp")
 CONVERSATIONS_DIR = Path(__file__).parent / "conversations"
-MEMORY_FILE = Path(__file__).parent / "memory.txt"
+MEMORY_FILE = Path(__file__).parent / "artifacts" / "memory.txt"
 CONNECTION_MODE = "STDIO"
 
 GOOGLE_OAUTH_CLIENT_ID = os.getenv("GOOGLE_OAUTH_CLIENT_ID")
@@ -534,7 +534,7 @@ def create_header() -> Text:
     header_text.append("                         ║\n", style="bold magenta")
     header_text.append("║                                                                               ║\n", style="bold magenta")
     header_text.append("║           ", style="bold magenta")
-    header_text.append("Powered by DeepSeek & MCP", style="bold yellow italic")
+    header_text.append("Powered by EaseVision", style="bold yellow italic")
     header_text.append("  •  ", style="bold white")
     header_text.append("Your AI Workspace Assistant", style="bold green italic")
     header_text.append("          ║\n", style="bold magenta")
@@ -682,7 +682,7 @@ def make_read_error_history_tool():
         Use this when you have failed a task 3 times and need to check past solutions.
         """
         try:
-            history_file = Path(__file__).parent / "error_history.txt"
+            history_file = Path(__file__).parent / "artifacts" / "error_history.txt"
             if not history_file.exists():
                 return "No error history file found."
                 
@@ -1198,8 +1198,8 @@ async def main() -> None:
                     
                     console.print(f"[bold yellow]📚 Learning from logs ({time_range})...[/bold yellow]")
                     logs_dir = Path(__file__).parent / "conversations"
-                    error_history_file = Path(__file__).parent / "error_history.txt"
-                    best_practices_file = Path(__file__).parent / "best_practices.txt" # New file
+                    error_history_file = Path(__file__).parent / "artifacts" / "error_history.txt"
+                    best_practices_file = Path(__file__).parent / "artifacts" / "best_practices.txt" # New file
                     
                     # Ensure error history exists if not already
                     if not error_history_file.exists():
